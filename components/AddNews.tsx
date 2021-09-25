@@ -41,8 +41,6 @@ const AddNews = (props) => {
                 (resp:any)=>{
                     if(!resp.success)
                         setaddError(true);
-                    else    
-                        console.log('successfully registered')
                 }
             )
         }
