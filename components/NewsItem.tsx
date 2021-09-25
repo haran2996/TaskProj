@@ -6,7 +6,6 @@ type PROPS ={
     id:String;
 }
 const NewsItem = (props:PROPS) => {
-    console.log(props);
     const router = useRouter();
     const [title, settitle] = useState('');
     const [story, setstory] = useState('');
@@ -21,13 +20,11 @@ const NewsItem = (props:PROPS) => {
         stateChangeFun(e.target.value);
     }
     useEffect(() => {
-        console.log("props",props.id);
         if(props.id)
         new Promise(
             (resolve,reject)=>
             dispatch(getNewsItem(props.id,resolve))
         ).then((res:any)=>{
-            console.log("res",res);
             if(res.success){
                 setnewsItem(res.news);
                 settitle(res.news.title);
@@ -44,11 +41,9 @@ const NewsItem = (props:PROPS) => {
     }
 
     const handleDeleteStory =() =>{
-        console.log('clicked')
         new Promise(
             (resolve,reject)=>dispatch(deleteNewsItem(props.id,resolve))
-        ).then((resp)=>{
-            console.log('resp in delete',resp)
+        ).then((resp: any)=>{
             if(resp.success){
                 router.push('/');
             }
