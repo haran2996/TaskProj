@@ -9,7 +9,8 @@ const initialState = {
     email:'',
     userId:''
   },
-  news: []
+  news: [],
+  notify:false
 }
 
 function reducer(state= initialState, action) {
@@ -33,6 +34,16 @@ function reducer(state= initialState, action) {
       return {
         ...state,
         news:action.payload
+      }
+    case actionTypes.CREATE_NOTIFICATION:
+      return {
+        ...state,
+        notify: action.payload
+      }
+    case actionTypes.REMOVE_NOTIFICATION:
+      return {
+        ...state,
+        notify: false
       }
     default:
       return state
