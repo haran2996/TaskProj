@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-//import noImage from '../images/noImage.jpg';
+import noImage from '../images/noImage.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import {getAllNews} from '../actions'
 import { useRouter } from 'next/router';
