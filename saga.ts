@@ -1,5 +1,5 @@
 import { all, call, delay, put, take, takeLatest } from 'redux-saga/effects'
-import { actionTypes, userLogin, UserData, LoginData, loginSuccess, getAllNewsSuccess } from './actions'
+import { actionTypes, userLogin, UserData, LoginData, loginSuccess, getAllNewsSuccess, createNotification, removeNotification } from './actions'
 
 
 
@@ -14,7 +14,6 @@ function* rootSaga() {
     takeLatest(actionTypes.GET_NEWSITEM,getNewsItem),
     takeLatest(actionTypes.UPDATE_NEWSITEM,updateNewsItem),
     takeLatest(actionTypes.DELETE_NEWSITEM,deleteNewsItem),
-
   ])
 }
 
@@ -40,37 +39,58 @@ function* getNewsItem(action){
     if(action.resolve)
         action.resolve(response);
 }
+
 function* getAllNews(){
     const response = yield call(callGetAllNews);
-    console.log(response);
     if(response.success)
         yield put(getAllNewsSuccess(response.news))
 }
 
 function* deleteNewsItem(action) {
     const response = yield call(callDeleteNewsItem, action.payload);
-    if(action.resolve)
+    if(action.resolve){
         action.resolve(response);
+        yield put(createNotification({
+            title: 'Success',
+            message: 'News has been Deleted'
+        }))
+    }
+    
 }
 
 function* registerUser(action) {
     const response = yield call(callRegisterUser, action.payload);
-    console.log('checkinggggg',response)
-    if(action.resolve)
+    if(action.resolve){
         action.resolve(response);
+        yield put(createNotification({
+            title: 'Success',
+            message: 'User is registered'
+        }))
+    }
+    
 }
 
 
 function* updateNewsItem (action) {
-    console.log('checking action',action)
     const response = yield call(callUpdateNewsItem,action.payload,action.newsId);
-    console.log(response);
+    if(response.success){
+        yield put(createNotification({
+            title: 'Success',
+            message: 'News has been Updated'
+        }))
+    }
 }
 
 function* addNewNewsItem (action) {
     const response = yield call(callAddNewsItem,action.payload);
-    if(action.resolve)
+    if(action.resolve){
         action.resolve(response);
+        yield put(createNotification({
+            title: 'Success',
+            message: 'News has been Published'
+        }))
+    }
+
 }
 
 function* logoutUser() {
@@ -79,7 +99,6 @@ function* logoutUser() {
 
 function* logginInUser(action) {
     const response = yield call(signInUser, action.payload);
-    console.log(response);
     if(action.resolve)
         action.resolve(response);
     if(response.success){
