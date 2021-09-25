@@ -2,18 +2,18 @@ import Link from 'next/link';
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkUserSession } from '../util/utils';
-import {userLogout} from '../actions'
-type PROPS = {
-    currentPage: string;
-}
-const TopNav = (props): PROPS => {
+import {userLogout} from '../actions';
+import Notification from './Notification'
+const TopNav = (props) => {
     const isUserLoggedIn = useSelector(store=>store.isUserLoggedIn);
+    const notify = useSelector(store=>store.notify);
     checkUserSession();
     const dispatch = useDispatch();
     const onLogout = () => {
         dispatch(userLogout())
     }
     return (
+        <React.Fragment>
         <div className='flex-1 bg-gray-200 flex flex-col'>
             <nav className='px-4 flex justify-between h-10 border-b-2'>
                 <ul className='flex items-center'>
@@ -45,7 +45,8 @@ const TopNav = (props): PROPS => {
                 </ul>
             </nav>
         </div>
-
+        {notify&&<Notification title={notify?.title} message={notify?.message}/>}
+        </React.Fragment>
     )
 }
 
