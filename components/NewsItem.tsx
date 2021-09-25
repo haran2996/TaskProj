@@ -7,6 +7,8 @@ type PROPS ={
 }
 const NewsItem = (props:PROPS) => {
     const router = useRouter();
+    const isUserLoggedIn = useSelector(store=>store.isUserLoggedIn);
+    const userInfo = useSelector(store=>store.userInfo);
     const [title, settitle] = useState('');
     const [story, setstory] = useState('');
     const [editMode, seteditMode] = useState(false);
@@ -20,17 +22,19 @@ const NewsItem = (props:PROPS) => {
         stateChangeFun(e.target.value);
     }
     useEffect(() => {
-        if(props.id)
-        new Promise(
-            (resolve,reject)=>
-            dispatch(getNewsItem(props.id,resolve))
-        ).then((res:any)=>{
-            if(res.success){
-                setnewsItem(res.news);
-                settitle(res.news.title);
-                setstory(res.news.story);
-            }
-        });
+        const id = window.location.pathname.split('/')[1];
+        if(props.id || id){
+            new Promise(
+                (resolve,reject)=>
+                dispatch(getNewsItem(props.id || id,resolve))
+            ).then((res:any)=>{
+                if(res.success){
+                    setnewsItem(res.news);
+                    settitle(res.news.title);
+                    setstory(res.news.story);
+                }
+            });
+        }
     }, []);
     const handleUpdateStory = ()=>{
         seteditMode(false);
@@ -62,6 +66,8 @@ const NewsItem = (props:PROPS) => {
                                 ( title || 'Title' )
                             }
                         </ul>
+                        {
+                        isUserLoggedIn&&userInfo?.userType ==='admin'&&
                         <div className="font-normal text-base p-2">
                             {
                                 editMode?
@@ -77,6 +83,7 @@ const NewsItem = (props:PROPS) => {
                                 Delete
                             </span>
                         </div>
+                        }
                     </div>
                 </h2>
                 {
