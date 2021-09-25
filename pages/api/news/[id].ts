@@ -25,7 +25,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
     case 'PUT' /* Edit a model by its ID */:
       try {
-        console.log(req.body.newsData)
         const news = await News.findOneAndUpdate({newsId: id}, {...req.body.newsData}, {
           new: true
         });
