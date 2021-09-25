@@ -15,14 +15,11 @@ const List = (props) => {
         dispatch(getAllNews());
     }, []);
     const handleNewItemClick=(item)=>{
-        console.log('item clicked',item)
-        // setcurrentStory(item);
         router.push(`/${item.newsId}`);
     }
     const handleCloseButton=(e)=>{
         setcurrentStory(null);
     }
-    // if(!currentStory)
         return (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 mt-12 mb-12">
             <div>
@@ -56,12 +53,6 @@ const List = (props) => {
             </div>
         </section>
         )
-    // else
-    //     return(
-    //         <div className='fixed bg-black bg-opacity-60 h-full w-full'>
-    //             <NewsItem title={currentStory?.title} story={currentStory?.story} closeButton={handleCloseButton}/>
-    //         </div>
-    //     )
 }
 
 export default List
