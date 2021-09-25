@@ -11,7 +11,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case 'POST':
       try {
         const { userData } = req.body;
-        console.log(userData);
         const user = await Users.find({email:userData.email, password:userData.password},{password:0,_id:0,__v:0});
         if(user.length>0)
             res.status(200).json({ success: true, user: user[0] })
