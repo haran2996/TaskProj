@@ -1,4 +1,3 @@
-import greenTick from '../images/greentick.svg';
 import { NotificationObject, removeNotification } from '../actions';
 import { useDispatch } from 'react-redux';
 import {useEffect} from 'react';
