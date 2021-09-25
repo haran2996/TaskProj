@@ -11,12 +11,18 @@ export const actionTypes = {
     GET_ALL_NEWS_SUCCESS: 'GET_ALL_NEWS_SUCCESS',
     GET_NEWSITEM: 'GET_NEWSITEM',
     UPDATE_NEWSITEM:'UPDATE_NEWSITEM',
-    DELETE_NEWSITEM: 'DELETE_NEWSITEM'
+    DELETE_NEWSITEM: 'DELETE_NEWSITEM',
+    CREATE_NOTIFICATION: 'CREATE_NOTIFICATION',
+    REMOVE_NOTIFICATION: 'REMOVE_NOTIFICATION'
   };
 
 export type LoginData = {
     email: String;
     password: String;
+}
+export type NotificationObject = {
+  title: string;
+  message: string;
 }
 
 export type UserData = {
@@ -36,6 +42,19 @@ export const getNewsItem = (newsId,resolve)=>{
     type: actionTypes.GET_NEWSITEM,
     payload: newsId,
     resolve
+  }
+}
+
+export const createNotification = (notificationObj:NotificationObject) => {
+  return {
+    type: actionTypes.CREATE_NOTIFICATION,
+    payload: notificationObj
+  }
+}
+
+export const removeNotification = () => {
+  return {
+    type: actionTypes.REMOVE_NOTIFICATION,
   }
 }
 
